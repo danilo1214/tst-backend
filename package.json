@@ -1,0 +1,14 @@
+{
+  "name": "tst-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "reset-db.js",
+  "scripts": {
+    "reset": "node reset-db.js && echo 'Reseted db'"
+  },
+  "author": "Danilo Dimitrievski",
+  "license": "ISC",
+  "dependencies": {
+    "xml-js": "^1.6.11"
+  }
+}
