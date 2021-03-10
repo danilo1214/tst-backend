@@ -1,6 +1,20 @@
 const fs = require("fs");
 const convert = require("xml-js");
 
+const siteComparator = (a, b) => {
+    if ( a.distance < b.distance ){
+        return -1;
+      }
+      if ( a.distance > b.distance ){
+        return 1;
+      }
+      return 0;
+}
+
+const getDistance = (longitude, latitude, site) => {
+    return Math.sqrt( Math.pow(longitude - site.longitude, 2) + Math.pow(latitude - site.latitude, 2))
+};
+
 const getRandomFullNames = (n, firstNames, lastNames) => {
     const set = new Set();
     for(let i = 0; i <n; i++){
@@ -47,5 +61,7 @@ module.exports = {
     cleanConvertedXMLtoJson,
     readTxt,
     readXmlToJson,
-    getRandomFullNames
+    getRandomFullNames,
+    getDistance,
+    siteComparator
 }
