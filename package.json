@@ -4,11 +4,16 @@
   "description": "",
   "main": "reset-db.js",
   "scripts": {
-    "reset": "node reset-db.js && echo 'Reseted db'"
+    "reset": "node reset-db.js && echo 'Reseted db'",
+    "start": "node app.js"
   },
   "author": "Danilo Dimitrievski",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.11.19",
+    "mongoose-random": "^0.1.1",
+    "mongoose-simple-random": "^0.4.1",
     "xml-js": "^1.6.11"
   }
 }

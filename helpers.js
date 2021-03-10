@@ -1,6 +1,20 @@
 const fs = require("fs");
 const convert = require("xml-js");
 
+const getRandomFullNames = (n, firstNames, lastNames) => {
+    const set = new Set();
+    for(let i = 0; i <n; i++){
+        const firstName = firstNames[Math.floor(Math.random()*firstNames.length)];
+        const lastName = lastNames[Math.floor(Math.random()*lastNames.length)];
+
+        set.add({
+            firstName,
+            lastName
+        });
+    }
+    return Array.from(set);
+}
+
 const readTxt = (path, separator) => {
     return fs.readFileSync(path).toString().split(separator);
 }
@@ -20,6 +34,8 @@ const cleanConvertedXMLtoJson = rows => {
             if(row[key]["_text"]){
                 const num = Number(row[key]["_text"]);
                 row[key] = num || row[key]["_text"];
+            }else{
+                row[key] = ""
             }
 
         });
@@ -30,5 +46,6 @@ const cleanConvertedXMLtoJson = rows => {
 module.exports = {
     cleanConvertedXMLtoJson,
     readTxt,
-    readXmlToJson
+    readXmlToJson,
+    getRandomFullNames
 }

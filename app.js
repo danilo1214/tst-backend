@@ -1,6 +1,17 @@
 const express = require("express");
-const port = 3003;
+const mongoose = require("mongoose");
+const config = require("./config");
 
+const port = config.port;
+const dbURI = config.dbURI;
 
 const app = express();
-app.listen(port);
+mongoose.connect(dbURI).then(conn=>{
+    console.log("Connected to database.");
+    app.listen(port);
+
+}).catch(err=>{
+    console.log(err);
+});
+
+
