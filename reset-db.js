@@ -17,7 +17,6 @@ cleanConvertedXMLtoJson(sites);
 siteIds = sites.map(site=> {
     return site["id_number"];
 });
-console.log(siteIds);
 
 mongoose.connect(config.dbURI).then(conn=>{
     mongoose.connection.db.dropDatabase(async (err, res) => {
@@ -30,9 +29,18 @@ mongoose.connect(config.dbURI).then(conn=>{
         for(const agent of agents){
             const agentObj = new Agent(agent);
             const id_number = siteIds[Math.floor(Math.random()*siteIds.length)];
-            const site = await Site.findOne({id_number}).then(site=>{
+            const site = await Site.findOne({id_number}).then(async site=>{
                 agentObj.siteId = site["_id"];
-                agentObj.save();
+                await agentObj.save();
+
+
+                await Site.update({
+                    _id: site.id
+                }, {
+                    $push: {
+                        agents: agentObj["_id"]
+                    }
+                });
             });
         }
 

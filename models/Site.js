@@ -77,7 +77,13 @@ const siteSchema = new Schema({
     },
     unique_number: {
         type: Number
-    }
+    },
+    agents: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'agent'
+        }
+    ]
 }, {
     timestamps: true
 });
