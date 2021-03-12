@@ -1,14 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const config = require("./config");
+
 const Site = require("./models/Site");
 const Agent = require("./models/Agent");
 
 const { getDistance, siteComparator } = require("./helpers");
-const { json } = require("express");
-
-const port = config.port;
-const dbURI = config.dbURI;
+const {port, dbURI} = require("./config");;
 
 const app = express();
 mongoose.connect(dbURI).then(conn => {
@@ -38,10 +35,16 @@ mongoose.connect(dbURI).then(conn => {
 
     app.get("/sites", (req, resp) => {
         let { longitude, latitude } = req.query;
+        if(!longitude || !latitude) {
+            resp.status(500).send({
+                error: "Please provide longitude and latitude"
+            });
+        }
+
         longitude = Number(longitude);
         latitude = Number(latitude);
 
-        Site.find({}).populate('agents').then(async sites => {
+        Site.find({}).populate('agents').then(sites => {
             for (const site of sites) {
                 site.distance = getDistance(longitude, latitude, site);
             };

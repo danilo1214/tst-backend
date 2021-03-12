@@ -4,7 +4,7 @@
   "description": "",
   "main": "reset-db.js",
   "scripts": {
-    "reset": "node reset-db.js && echo 'Reseted db'",
+    "seed": "node reset-db.js && echo 'Database populated.'",
     "start": "node app.js"
   },
   "author": "Danilo Dimitrievski",
