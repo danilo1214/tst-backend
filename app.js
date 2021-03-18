@@ -10,7 +10,7 @@ const { port, dbURI } = require("./config");;
 const app = express();
 mongoose.connect(dbURI).then(conn => {
     console.log("Connected to database.");
-    app.listen(port);
+    app.listen(process.env.PORT || port);
     app.use((req, res, next) => {
 
         res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
