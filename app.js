@@ -5,7 +5,7 @@ const Site = require("./models/Site");
 const Agent = require("./models/Agent");
 
 const { getDistance, siteComparator } = require("./helpers");
-const { port, dbURI } = require("./config");;
+const { port, dbURI, clientUrl } = require("./config");;
 
 const app = express();
 mongoose.connect(dbURI).then(conn => {
@@ -13,7 +13,7 @@ mongoose.connect(dbURI).then(conn => {
     app.listen(process.env.PORT || port);
     app.use((req, res, next) => {
 
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+        res.setHeader('Access-Control-Allow-Origin', clientUrl);
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
         res.setHeader('Access-Control-Allow-Credentials', true);
