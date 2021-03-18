@@ -5,7 +5,7 @@ const Site = require("./models/Site");
 const Agent = require("./models/Agent");
 
 const { getDistance, siteComparator } = require("./helpers");
-const {port, dbURI} = require("./config");;
+const { port, dbURI } = require("./config");;
 
 const app = express();
 mongoose.connect(dbURI).then(conn => {
@@ -21,11 +21,17 @@ mongoose.connect(dbURI).then(conn => {
         next();
     });
 
+    app.get("/", (req, resp) => {
+        resp.json({
+            health: "OK"
+        });
+    });
+
     app.get("/site/:id", (req, resp) => {
-        const {id} = req.params;
-        Site.findById(id).populate('agents').then(site=>{
+        const { id } = req.params;
+        Site.findById(id).populate('agents').then(site => {
             resp.json(site);
-        }).catch(err=>{
+        }).catch(err => {
             resp.status(500).send({
                 ...err
             });
@@ -35,7 +41,7 @@ mongoose.connect(dbURI).then(conn => {
 
     app.get("/sites", (req, resp) => {
         let { longitude, latitude } = req.query;
-        if(!longitude || !latitude) {
+        if (!longitude || !latitude) {
             resp.status(500).send({
                 error: "Please provide longitude and latitude"
             });
